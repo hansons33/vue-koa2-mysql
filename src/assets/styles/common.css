@@ -1,0 +1,48 @@
+body,html{
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-size:100PX;
+    user-select:auto
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+	margin:0;
+	padding:0;
+}
+body {
+	font-size: 0.14rem;
+	/* font-family: Hiragino Sans GB,STHeiti STXihei,Microsoft JhengHei,Microsoft YaHei,Arial; */
+	font-family: 'PingFangSC-Regular',Arial;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	background: #F0EFF4;
+}
+
+/* 路由跳转的翻转效果 */
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+    will-change: transform;
+    transition: all 400ms;
+    position: absolute;
+    width: 100%;
+    height: 100%
+}
+.slide-right-enter {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+}
+.slide-right-leave-active {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+}
+.slide-left-enter {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+}
+.slide-left-leave-active {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+}
