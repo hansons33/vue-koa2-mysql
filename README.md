@@ -31,6 +31,7 @@
 └─static
 ```
 ## 项目启动
+npm install 安装依赖后
 npm run start 启动项目
 ## tips
 可在server目录下的api.js文件中更改数据库连接
