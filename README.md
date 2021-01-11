@@ -30,6 +30,8 @@
 │  └─utils 数据处理文件
 └─static
 ```
+## 项目启动
+npm run start 启动项目
 ## tips
 可在server目录下的api.js文件中更改数据库连接
 
