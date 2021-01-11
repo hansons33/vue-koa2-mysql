@@ -14,7 +14,7 @@
         show-word-limit
         placeholder="正文内容"
         /> 
-        <van-button size="large" color="#F24957" @click="addArticle">确认发布</van-button>
+        <van-button size="large" color="#F24957" @click="addArticle">{{this.isEdit ? '提交编辑' : '确认发布'}}</van-button>
     </div>
 </template>
 
@@ -28,7 +28,9 @@ export default {
             summary: '',
             content: '',
             type:'',
-            username:this.$route.query.username
+            isEdit:false,
+            username: localStorage.getItem('username'),
+            pastTitle: ''
         }
     },
     computed:{
@@ -40,14 +42,16 @@ export default {
         async addArticle(){
             if(this.public){
                 let res = await HomeService.addArticle({
-                username:this.username,
-                article:{
-                    title: this.title,
-                    summary: this.summary,
-                    content: this.content,
-                    timestamp: +(new Date()),
-                    type: this.type
-                    }
+                    username:this.username,
+                    article:{
+                        pastTitle: this.pastTitle,
+                        title: this.title,
+                        summary: this.summary,
+                        content: this.content,
+                        timestamp: +(new Date()),
+                        type: this.type
+                    },
+                    isEdit:this.isEdit
                 })
                 if (res.error_info == '0'){
                     this.$toast(res.message)
@@ -59,6 +63,19 @@ export default {
             }else{
                 this.$toast('请填写完整的文章信息，谢谢！')
             }
+        }
+    },
+    activated(){
+        console.log(123)
+        Object.assign(this.$data,this.$options.data())
+        if(this.$route.params.type == 'edit'){
+            let {article} = this.$route.params
+            this.title = article.title
+            this.pastTitle = article.title
+            this.summary = article.summary
+            this.content = article.content
+            this.type = article.type
+            this.isEdit = true
         }
     }
 }

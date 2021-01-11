@@ -1,7 +1,7 @@
 <template>
     <div class="contect">
         <h3>感谢支持</h3>
-        联系方式:<br>QQ：413755962<br>微信:Pendulumhan<br>欢迎交流！
+        联系方式:<br>QQ：413755962<br>欢迎交流！
     </div>
 </template>
 

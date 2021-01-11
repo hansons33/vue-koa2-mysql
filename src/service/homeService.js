@@ -74,6 +74,16 @@ class _homeService {
         })
         return result
     }
+
+    // 编辑或删除文章
+    async deleteArticle(data) {
+        const url = "/api/deleteArticle"
+        const result = await Axios.requestApi({
+            url,
+            data
+        })
+        return result
+    }
 }
 
 export default new _homeService();

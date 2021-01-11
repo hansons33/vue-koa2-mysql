@@ -1,9 +1,6 @@
 <template>
     <Flex>
         <FlexItem class="article">
-            <div class="publish">
-                <van-button size="small" color="#696969" class="public" type="info" @click.stop="publish(username)">+发布文章</van-button>
-            </div>
             <ul class="news_list">
                 <li  v-for="(item,index) of result" :key="index" @click="goToDetail(item.title)">
                     <p class="title">{{item.title}}</p>
@@ -22,51 +19,25 @@
 </template>
 
 <script>
-import HomeService from "@/service/homeService"
-import dataUtils from "@/utils/dataUtils"
 export default {
     name:'Article',
+    props:{
+        articles:{
+            type: Array,
+            default: []
+        }
+    },
     data(){
         return {
-            result: [],
             username: '',
+            result: [],
             article:'123123',
-            noArticle: false,
             currentPage: 1,
             total_article: 0,
             totalArticle: []
         }
     },
     methods:{
-        async getArticle(){
-            let res = await HomeService.getArticles({
-                username:this.username
-                })
-            if (res.error_info == '0'){
-                const temp = []
-                res.datas.article.forEach(item=>{
-                    const cur = {
-                        title: item.title || '--',
-                        summary: item.summary || '--',
-                        type: item.type || '--',
-                        timestamp: dataUtils.getDateTime(item.timestamp) || '--',
-                        content: item.content || '--'
-                    }
-                    temp.push(cur)
-                })
-                this.totalArticle = temp
-                this.total_article = this.totalArticle.length
-                this.result = this.totalArticle.slice((this.currentPage-1)*3,this.currentPage*3)
-            }else{
-                this.noArticle = true
-            } 
-        },
-        publish(username){
-            this.$router.push({
-                path: '/home/public',
-                query: {username},
-            })
-        },
         goToDetail(title){
             this.$router.push({
                 path:'/home/detail',
@@ -81,20 +52,24 @@ export default {
         }
     },
     created(){
-        this.username = sessionStorage.getItem('username')
-        this.getArticle()
+        this.result = this.articles
+        if(this.result.length) {
+            this.totalArticle = this.result
+            this.total_article = this.totalArticle.length
+            this.result = this.totalArticle.slice((this.currentPage-1)*3,this.currentPage*3)
+        }
     },
     activated(){
-        this.getArticle()
+        this.result = this.articles
+        if(this.result.length) {
+            this.totalArticle = this.result
+            this.total_article = this.totalArticle.length
+            this.result = this.totalArticle.slice((this.currentPage-1)*3,this.currentPage*3)
+        }
     }
 }
 </script>
 <style lang="stylus" scoped>
-.publish
-    padding: .05rem
-    .public
-        float:right
-        z-index: 99
 .news_list li
     border-bottom: 1px solid #ebebeb;
     padding: .15rem 0;

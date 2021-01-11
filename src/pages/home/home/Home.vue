@@ -1,20 +1,7 @@
 <template>
-    <van-cell-group>
-        <HeaderBar v-if="!firstLoad" :title="'个人主页'"></HeaderBar>
-        <div class="userInfo" v-show="!firstLoad">
-            <FirstLoad v-if="firstLoad"></FirstLoad>
-            <div v-if="uploadControl">
-                <van-uploader 
-                v-model="fileList" 
-                :afterRead="afterRead"
-                :max-count="1"
-                :max-size="64 * 1024"
-                @oversize="onOversize"
-                class="uploader"
-                />
-                <van-button class="submit" type="info" @click="submit(submitBtnChange)">{{submitBtnChange}}</van-button>
-                <!-- <van-button class="submit" type="info" @click="submit(this.submitBtn)">{{this.submitBtn}}</van-button> -->
-            </div>
+    <van-cell-group v-if='!firstLoad'>
+        <HeaderBar title="个人主页"></HeaderBar>
+        <div class="userInfo">
             <div v-if="!uploadControl">
                 <img class="photo" :src="imgUrl" alt="">
             </div>
@@ -64,7 +51,6 @@ export default {
     methods:{
         async getUserInfo(){ //获取用户信息
             let res = await HomeService.getUserInfo({username:this.username})
-            console.log(res)
             if(res.error_info == '0'){
                 this.petName = res.datas.petName
                 this.introduction = res.datas.introduction
@@ -75,6 +61,12 @@ export default {
                 this.firstLoad = false
             }else{
                 this.firstLoad = true
+                this.$router.push({
+                    path:'/home/changeInfo',
+                    query:{
+                        flag:'firstLogin'
+                    }
+                })
             }
         },
         async afterRead(file){ //读取图片后的回调
@@ -95,7 +87,6 @@ export default {
             }
         },
         submit(type){ //上传头像
-            console.log(type)
             if(type == "上传头像"){
                 document.querySelector('.van-uploader__input').click()
             }else if(type == "重新上传"){
@@ -111,7 +102,9 @@ export default {
             this.$dialog.confirm({
                 title: '您确定要退出登录吗？',
             }).then(()=>{
-                this.$router.push('/')
+                this.$router.replace('/')
+                localStorage.removeItem('token')
+                localStorage.removeItem('username')
             }).catch(()=>{
                 //
             })
@@ -120,7 +113,7 @@ export default {
             this.$dialog.confirm({
                 title: '点击确认前往修改个人信息'
             }).then(()=>{
-                this.$router.push('/changeInfo')
+                this.$router.push('/home/changeInfo')
             }).catch(()=>{
                 //
             })
@@ -129,12 +122,8 @@ export default {
             this.$toast('图片不能超过64kb')
         }
     },
-    created(){
-        this.username = this.$route.query.username
-        this.getUserInfo()
-    },
     activated(){
-        this.username = this.$route.query.username
+        this.username = this.$store.state.username
         this.getUserInfo()
     }
 }
@@ -144,6 +133,7 @@ export default {
 .userInfo
     display: flex
     padding: .15rem
+    position: relative
     .uploader
         display: inline
     .submit
@@ -163,11 +153,14 @@ export default {
         .introduce
             opacity: .5
     .settings
-        margin-left: .2rem
+        position:absolute
+        right: .2rem
+        top: .05rem
         min-width: .6rem
         p   
             padding: .02rem
             font-size: .12rem
+            color: orange
             &:first-child
                 margin-top:.1rem
 </style>

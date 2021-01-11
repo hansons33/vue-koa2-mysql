@@ -2,7 +2,7 @@
   <div id="app" class="app-container">
       <transition :name="transitionName">
           <keep-alive>
-              <router-view></router-view>
+              <router-view v-if="isRouterAlive"></router-view>
           </keep-alive>
       </transition >
   </div>

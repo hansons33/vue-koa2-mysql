@@ -1,6 +1,8 @@
 import axios from "axios";
 import qs from 'qs';
 import {Toast} from 'vant'
+import store from "@/store"
+
 // 请求拦截器
 axios.interceptors.request.use(
     config => {
@@ -9,6 +11,9 @@ axios.interceptors.request.use(
         //     config.headers.Authorization = `token fdsafds`;
         // }
         // console.log(config);
+        // if (store.state.token) {         // 若有token，则在请求头中加token
+        //     config.headers.Authorization = store.state.token
+        // }
         if (config.headers && config.headers['Content-Type'].indexOf("application/x-www-form-urlencoded") > -1) {
             config.data = qs.stringify(config.data)
         }
@@ -26,13 +31,14 @@ axios.interceptors.response.use(
     },
     error => {
         if(error.response){
-            // switch (error.response.status) {
-            //     case 401:
-            //         // 返回 401跳转到登录页面
-            //         router.replace({
-            //             path: 'login',
-            //         })
-            // }
+            switch (error.response.status) {
+                case 401:
+                    store.commit("del_token")
+                    // 返回 401跳转到登录页面
+                    router.replace({
+                        path: 'login',
+                    })
+            }
         }
         return Promise.reject(error.response.data)
     }
@@ -95,7 +101,7 @@ class Axios{
         } catch (e) {
             console.log("requestApi,", JSON.stringify(e));
             Toast({
-                message: '请稍后重新再试'
+                message: '请求失败,请稍后重新再试'
             });
             results = "CATCH_ERROR"
         }

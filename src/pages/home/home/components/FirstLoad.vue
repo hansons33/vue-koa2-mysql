@@ -1,7 +1,7 @@
 <template>
     <section>
         <div class="firstLoad">
-            <div class="title">请先设置您的昵称和个人简介</div>
+            <div class="title">请先设置您基本信息</div>
             <van-cell-group>
                 <van-field 
                 v-model="petName" 
@@ -41,7 +41,7 @@ export default {
             return {
                 petName: this.petName,
                 introduction: this.introduction,
-                username:this.$route.query.username
+                username:this.$store.state.username
             }
         }
     },

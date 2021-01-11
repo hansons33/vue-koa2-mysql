@@ -3,8 +3,16 @@
         <div class="content">
             <div class="title">请登录或注册您的账号</div>
             <van-cell-group>
-                <van-field v-model="username" label="用户" placeholder="请输入用户名" />
-                <van-field class="password" v-model="password" type="password" label="密码" placeholder="请输入密码" />
+                <van-field 
+                v-model="username" 
+                label="用户" 
+                placeholder="请输入用户名" />
+                <van-field 
+                class="password" 
+                v-model="password" 
+                type="password" 
+                label="密码" 
+                placeholder="请输入密码" />
             </van-cell-group>
             <div class="button">
                 <van-button class="login" type="info" @click="login">登录</van-button>
@@ -38,8 +46,10 @@ export default {
                 let res = await HomeService.login(this.loginInfo)              
                 if(res.error_info == "0"){
                     this.$toast(res.message)
-                    sessionStorage.setItem('sid',true)
-                    sessionStorage.setItem('username',this.loginInfo.username)
+                    // sessionStorage.setItem('sid',true)
+                    let _token = 'Bearer ' + res.tk
+                    this.$store.commit("set_token",_token)
+                    this.$store.commit("setUser",this.loginInfo.username)
                     this.$router.push({
                         path: '/home',
                         query: {
@@ -61,7 +71,9 @@ export default {
             }
         }
     },
-    mounted(){
+    activated(){
+        Object.assign(this.$data, this.$options.data()); // 初始化数据
+        console.log(123)
         let mima = document.querySelector('.password')
         let loginButton = document.querySelector('.login')
         mima.addEventListener('keyup',function(e){

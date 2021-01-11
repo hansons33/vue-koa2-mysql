@@ -2,9 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import login from "@/pages/login/Login"
 import Index from "@/pages/home/Index"
-import changeInfo from '@/pages/home/home/components/ChangeInfo'
 Vue.use(Router)
-
+// const originalPush = Router.prototype.push
+// Router.prototype.push = function push(location) {
+//   return originalPush.call(this, location).catch(err => err)
+// }
 export default new Router({
   routes: [
     {
@@ -39,6 +41,11 @@ export default new Router({
           path:'/home/detail',
           name: "detail",
           component: () => import("@/pages/detail/Detail")
+        },
+        {
+          path:'/home/changeInfo',
+          name: 'changeInfo',
+          component:() => import('@/pages/home/home/components/ChangeInfo')
         }
       ]
     },
