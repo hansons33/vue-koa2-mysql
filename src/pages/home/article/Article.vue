@@ -3,7 +3,12 @@
         <FlexItem class="article">
             <ul class="news_list">
                 <li  v-for="(item,index) of result" :key="index" @click="goToDetail(item.title)">
-                    <p class="title">{{item.title}}</p>
+                    <p class="title">
+                        {{item.title}}
+                        <span v-if="item.isTop" class="isTop">
+                            置顶
+                        </span>
+                    </p>
                     <p class="text">{{item.summary}}</p>
                     <p class="tips">
                         <span class="left">{{item.type}}</span>
@@ -52,7 +57,9 @@ export default {
         }
     },
     created(){
-        this.result = this.articles
+        this.result = this.articles.sort((a,b)=>{
+            return (b.isTop - a.isTop)
+        })
         if(this.result.length) {
             this.totalArticle = this.result
             this.total_article = this.totalArticle.length
@@ -73,6 +80,7 @@ export default {
 .news_list li
     border-bottom: 1px solid #ebebeb;
     padding: .15rem 0;
+    
     p.title
         color: #333333;
         font-size: .16rem;
@@ -80,11 +88,19 @@ export default {
         position: relative;
         span
             position: absolute;
-            right: 0;
+            right: .1rem;
             top: 0;
-            font-size: .12rem;
-            color: #999;
-            font-weight: normal;
+            font-size: .14rem;
+            color: #F24957;
+            &:after
+                height: .15rem
+                width: .1rem
+                content: '';
+                position:absolute;
+                right: -.1rem
+                top: .05rem
+                background: url('~@/assets/images/isTop.png')no-repeat center
+                background-size: .13rem .13rem
     p.text
         color: #555555;
         margin-top: .1rem;

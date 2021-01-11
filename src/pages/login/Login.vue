@@ -65,9 +65,13 @@ export default {
             }
         },
         async regist(){
-            let result = await HomeService.regist(this.loginInfo)
-            if (result.error_info == '0'){
-                this.$toast(result.message)
+            if(this.loginInfo.username.length && this.loginInfo.password.length){
+                let result = await HomeService.regist(this.loginInfo)
+                if (result.error_info == '0'){
+                    this.$toast(result.message)
+                }
+            }else{
+                this.$toast("用户名或密码为空，请重新输入")
             }
         }
     },

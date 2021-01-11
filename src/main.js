@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import store from './store'
-import {  Sidebar, SidebarItem ,Tab,Tabs,Dialog,Cell,CellGroup,Field,Button,Toast,Uploader,Skeleton,Pagination} from "vant"
+import {  Switch,Sidebar, SidebarItem ,Tab,Tabs,Dialog,Cell,CellGroup,Field,Button,Toast,Uploader,Skeleton,Pagination} from "vant"
 import 'vant/lib/icon/local.css'
 import '@/assets/styles/common.css'
 Vue.config.productionTip = false
@@ -23,6 +23,7 @@ Vue.use(Skeleton)
 Vue.use(Pagination)
 Vue.use(Sidebar)
 Vue.use(SidebarItem)
+Vue.use(Switch)
 /* eslint-disable no-new */
 
 import Flex from "@/components/layout/Flex" // flex布局组件和样式

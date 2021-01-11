@@ -40,7 +40,8 @@ export default {
                         summary: temp.summary || '--',
                         type: temp.type || '--',
                         timestamp: dataUtils.getDateTime(temp.timestamp) || '--',
-                        content: temp.content || '--'
+                        content: temp.content || '--',
+                        isTop: temp.isTop
                     }
                 }else{
                     this.$toast('该文章不存在')

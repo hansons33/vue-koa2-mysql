@@ -55,7 +55,8 @@ export default {
                         summary: item.summary || '--',
                         type: item.type || '--',
                         timestamp: dataUtils.getDateTime(item.timestamp) || '--',
-                        content: item.content || '--'
+                        content: item.content || '--',
+                        isTop: item.isTop
                     }
                     temp.push(cur)
                 })

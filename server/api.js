@@ -128,7 +128,9 @@ apiRoutes.get('/api/articles',async ctx=>{
                 error_info: '0',
                 message: '',
                 datas:{
-                    article: JSON.parse(row[0].Articles)
+                    article: JSON.parse(row[0].Articles).sort((a,b)=>{
+                        return (b.timestamp - a.timestamp)
+                    })
                 }
             }
         }else{
@@ -206,5 +208,11 @@ apiRoutes.post('/api/deleteArticle',async ctx=>{
             message: '删除失败，请稍后重试'
         }
     }
+})
+apiRoutes.get('/api/isTopArticle',async ctx=>{
+    let {username, title} = ctx.request.body
+    let sql = "SELECT * FROM userarticles WHERE username=?"
+    let [res] = await connection.promise().query(sql,[username])
+    console.log(res)
 })
 module.exports = apiRoutes;
