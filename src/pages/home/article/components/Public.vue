@@ -10,7 +10,7 @@
                     <van-switch v-model="checked" size="24" />
                 </template>
             </van-cell>
-            <van-field 
+            <!-- <van-field 
             v-model="content" 
             rows="15"
             autosize 
@@ -19,7 +19,8 @@
             maxlength="2000"
             show-word-limit
             placeholder="正文内容"
-            /> 
+            /> -->
+            <editor></editor>
         </article>
         <footer>
             <van-button class="footer" size="large" color="#F24957" @click="addArticle">{{this.isEdit ? '提交编辑' : '确认发布'}}</van-button>
@@ -29,7 +30,9 @@
 
 <script>
 import HomeService from "@/service/homeService"
+import editor from '../../../../components/editor/editor.vue'
 export default {
+  components: { editor },
     name:'Public',
     data(){
         return {
@@ -74,6 +77,9 @@ export default {
             }else{
                 this.$toast('请填写完整的文章信息，谢谢！')
             }
+        },
+        catchData(data){
+            this.content = data
         }
     },
     activated(){
@@ -92,8 +98,16 @@ export default {
 }
 </script>
 <style lang="stylus">
+section
+    height: 100%
+article
+    height: 92%
+    overflow: hidden
 footer
     width: 100%
     position: absolute 
     bottom: 0
+    height: 8%
+    .footer
+        height: 100%
 </style>

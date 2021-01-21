@@ -1,6 +1,6 @@
 <template>
-    <Flex>
-        <FlexItem class="article">
+    <section>
+        <article>
             <ul class="news_list">
                 <li  v-for="(item,index) of result" :key="index" @click="goToDetail(item.title)">
                     <p class="title">
@@ -12,15 +12,21 @@
                     <p class="text">{{item.summary}}</p>
                     <p class="tips">
                         <span class="left">{{item.type}}</span>
-                    </p>
-                    <p class="tips">
                         <span class="time">{{item.timestamp}}</span>
                     </p>
                 </li>
             </ul>
-            <van-pagination v-if="result.length" v-model="currentPage" :total-items="total_article" :items-per-page="3" @change="paginationChange"/>
-        </FlexItem>
-    </Flex>
+        </article>
+        <van-pagination 
+        class="pagination" 
+        v-if="result.length" 
+        v-model="currentPage" 
+        :total-items="total_article" 
+        :items-per-page="3" 
+        @change="paginationChange"
+        force-ellipses
+        />
+    </section>
 </template>
 
 <script>
@@ -80,7 +86,6 @@ export default {
 .news_list li
     border-bottom: 1px solid #ebebeb;
     padding: .15rem 0;
-    
     p.title
         color: #333333;
         font-size: .16rem;
@@ -125,8 +130,13 @@ export default {
             padding: 0 .06rem;
         .time
             position: absolute
-            left: 0rem
+            right: 0rem
             color: #999999
             text-align: left
+.van-pagination
+    position: fixed
+    bottom: 0
+    right: 0
+    width: 100%
 </style>
 

@@ -5,7 +5,7 @@
             v-model="fileList" 
             :afterRead="afterRead"
             :max-count="1"
-            :max-size="64 * 1024"
+            :max-size="128 * 1024"
             @oversize="onOversize"
             class="uploader"
             />
@@ -81,7 +81,7 @@ export default {
             }
         },
         onOversize(file) {
-            this.$toast('图片不能超过64kb')
+            this.$toast('图片不能超过128kb')
             this.submitBtn = "重新上传"
         },
     },

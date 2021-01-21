@@ -7,7 +7,7 @@
                 <span class="time">发布时间:{{article.timestamp}}</span>
                 <span>作者:{{this.$store.state.username}}</span>
             </div>
-            <div class="content">{{article.content}}</div>
+            <div class="content" v-html="article.content"></div>
         </FlexItem>
         <div class="buttons">
             <van-button size="normal" color="#7232dd" @click="edit">重新编辑</van-button>
