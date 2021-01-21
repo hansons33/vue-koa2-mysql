@@ -3,6 +3,7 @@
 > vue全家桶+koa2+mysql全栈练手小项目，简单发布修改文章功能
 
 ## 目录结构
+```
 ├─build 构建脚本目录
 ├─config 项目配置
 ├─server koa2服务器
@@ -28,6 +29,10 @@
 │  ├─store 应用级数据(state)
 │  └─utils 数据处理文件
 └─static
+```
+## 项目启动
+npm install 安装依赖后
+npm run start 启动项目
 ## tips
 可在server目录下的api.js文件中更改数据库连接
 
