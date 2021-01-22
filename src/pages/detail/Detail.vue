@@ -97,7 +97,7 @@ export default {
             margin: .03rem
             color: #555555
     .content
-        padding: .1rem
+        padding: .2rem
         font-size: .16rem
 .buttons
     width: 100%

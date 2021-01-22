@@ -1,7 +1,7 @@
 <template>
     <div>
         <van-uploader 
-            v-if="uploadControl"
+            v-if="!imgUrl.length"
             v-model="fileList" 
             :afterRead="afterRead"
             :max-count="1"
@@ -9,10 +9,10 @@
             @oversize="onOversize"
             class="uploader"
             />
-        <div v-if="!uploadControl">
-            <img class="photo" :src="imgUrl2" alt="">
+        <div v-if="imgUrl.length">
+            <img class="photo" :src="imgUrl" alt="">
         </div>
-        <van-button class="submit" type="info" @click="submit(submitBtnChange)">{{submitBtnChange}}</van-button>
+        <van-button v-if="changable" class="submit" type="info" @click="submit(submitBtnChange)">{{submitBtnChange}}</van-button>
     </div>
 </template>
 
@@ -25,6 +25,14 @@ export default {
         imgUrl:{
             type: String,
             default: ''
+        },
+        size:{
+            type: Number,
+            default: 128
+        },
+        changable:{
+            type: Boolean,
+            default: true
         }
     },
     data(){
@@ -87,11 +95,6 @@ export default {
     },
     activated(){
         Object.assign(this.$data,this.$options.data())
-        if (this.imgUrl){
-            this.uploadControl = false
-            this.submitBtn = "更换头像"
-            this.imgUrl2 = this.imgUrl 
-        }
     }
 }
 </script>

@@ -2,9 +2,7 @@
     <van-cell-group v-if='!firstLoad'>
         <HeaderBar title="个人主页"></HeaderBar>
         <div class="userInfo">
-            <div v-if="!uploadControl">
-                <img class="photo" :src="imgUrl" alt="">
-            </div>
+            <upload-img :imgUrl="imgUrl" :changable="changable"></upload-img>
             <div class="personal">
                 <p>昵称:{{petName}}</p>
                 <span class="introduce">个人简介:{{this.introduction}}</span>
@@ -24,12 +22,14 @@
 import FirstLoad from "@/pages/home/home/components/FirstLoad"
 import Tab from "@/pages/home/home/components/Tab"
 import HomeService from "@/service/homeService"
+import UploadImg from '../../../components/uploadImg/uploadImg.vue'
 export default {
     inject: ['reload'],
     name: 'Home',
     components:{
         FirstLoad,
         Tab,
+        UploadImg,
     },
     data(){
         return {
@@ -37,10 +37,9 @@ export default {
             petName: '',
             introduction: '',
             imgUrl: "", //头像
-            uploadControl: true,
             fileList: [],
             username:'',
-            submitBtn: '上传头像'
+            changable: true
         }
     },
     computed:{
@@ -56,7 +55,7 @@ export default {
                 this.introduction = res.datas.introduction
                 if(res.datas.imgUrl){
                     this.imgUrl = res.datas.imgUrl
-                    this.uploadControl = false
+                    this.changable = false
                 }
                 this.firstLoad = false
             }else{
@@ -67,35 +66,6 @@ export default {
                         flag:'firstLogin'
                     }
                 })
-            }
-        },
-        async afterRead(file){ //读取图片后的回调
-            let imgUrl = file.content
-            file.status = "uploading";
-            file.message = '上传中';
-            let res = await HomeService.addImg({
-                username: this.username,
-                imgUrl
-            })
-            if(res && res.error_info == "0"){
-                this.submitBtn = "确认上传"
-                file.status = "done"
-            }else{
-                this.submitBtn = "重新上传"
-                file.status = "failed";
-                file.message = "上传失败"
-            }
-        },
-        submit(type){ //上传头像
-            if(type == "上传头像"){
-                document.querySelector('.van-uploader__input').click()
-            }else if(type == "重新上传"){
-                console.log(document.querySelector('.van-uploader__preview-delete').click())
-                setTimeout(()=>{
-                    document.querySelector('.van-uploader__input').click()
-                },50)      
-            }else{
-                this.reload()
             }
         },
         logout(){ //退出登录
@@ -117,9 +87,6 @@ export default {
             }).catch(()=>{
                 //
             })
-        },
-        onOversize(file) {
-            this.$toast('图片不能超过64kb')
         }
     },
     activated(){
