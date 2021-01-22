@@ -46,12 +46,16 @@ router.beforeEach((to,from,next) => {
     if (token){
       next();
     }else {
-      next({
-        path: '/login',
-        query:{
-          redirect: to.fullPath
-        }
-      })
+      if(from == '/login'){
+        next()
+      }else{
+        next({
+          path: '/login',
+          query:{
+            redirect: to.fullPath
+          }
+        })
+      }
     }
   } else {
     next();

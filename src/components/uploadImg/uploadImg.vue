@@ -1,18 +1,18 @@
 <template>
     <div>
         <van-uploader 
-            v-if="!imgUrl.length"
+            v-if="!uploadControl"
             v-model="fileList" 
             :afterRead="afterRead"
             :max-count="1"
-            :max-size="128 * 1024"
+            :max-size="size * 1024"
             @oversize="onOversize"
             class="uploader"
             />
-        <div v-if="imgUrl.length">
+        <div v-if="uploadControl">
             <img class="photo" :src="imgUrl" alt="">
         </div>
-        <van-button v-if="changable" class="submit" type="info" @click="submit(submitBtnChange)">{{submitBtnChange}}</van-button>
+        <van-button v-if="changable" class="submit" type="info" @click="submit(submitBtn)">{{submitBtn}}</van-button>
     </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
         },
         size:{
             type: Number,
-            default: 128
+            default: 1024
         },
         changable:{
             type: Boolean,
@@ -46,6 +46,16 @@ export default {
     computed:{
         submitBtnChange(){
             return this.submitBtn
+        }
+    },
+    watch:{
+        imgUrl(newVal){
+            if(newVal){
+                this.submitBtn = '更换头像'
+                this.uploadControl = true
+            }else{
+                this.uploadControl = false
+            }
         }
     },
     methods:{
@@ -69,10 +79,10 @@ export default {
             }
         },
         submit(type){ //上传头像
-            if(type == "上传头像" || type == "重新上传"){
+            if(type == "上传头像"){
                 document.querySelector('.van-uploader__input').click()
             }else{
-                this.uploadControl = true
+                this.uploadControl = false
                 setTimeout(()=>{
                     let button = document.querySelector('.van-uploader__preview-delete')
                     if(button){
@@ -89,13 +99,16 @@ export default {
             }
         },
         onOversize(file) {
-            this.$toast('图片不能超过128kb')
+            this.$toast(`图片不能超过${this.size}kb`)
             this.submitBtn = "重新上传"
         },
     },
     activated(){
         Object.assign(this.$data,this.$options.data())
-    }
+        if(!this.imgUrl.length){
+            this.uploadControl = false
+        }
+    },
 }
 </script>
 
