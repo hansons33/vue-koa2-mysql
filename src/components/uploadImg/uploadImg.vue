@@ -28,7 +28,7 @@ export default {
         },
         size:{
             type: Number,
-            default: 1024
+            default: 256
         },
         changable:{
             type: Boolean,
@@ -40,12 +40,6 @@ export default {
             fileList:[],
             submitBtn: '上传头像',
             uploadControl: true,
-            imgUrl2: ''
-        }
-    },
-    computed:{
-        submitBtnChange(){
-            return this.submitBtn
         }
     },
     watch:{
@@ -69,7 +63,6 @@ export default {
             })
             if(res && res.error_info == "0"){
                 this.uploadControl = false
-                this.imgUrl2 = imgUrl
                 this.submitBtn = "更换头像"
                 file.status = "done"
             }else{

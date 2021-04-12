@@ -10,16 +10,6 @@
                     <van-switch v-model="checked" size="24" />
                 </template>
             </van-cell>
-            <!-- <van-field 
-            v-model="content" 
-            rows="15"
-            autosize 
-            label="正文内容" 
-            type="textarea"
-            maxlength="2000"
-            show-word-limit
-            placeholder="正文内容"
-            /> -->
             <editor></editor>
         </article>
         <footer>
@@ -84,7 +74,7 @@ export default {
     },
     activated(){
         Object.assign(this.$data,this.$options.data())
-        if(this.$route.params.type == 'edit'){
+        if(this.$route.params.type == 'edit'){ //数据反显
             let {article} = this.$route.params
             this.title = article.title
             this.pastTitle = article.title
