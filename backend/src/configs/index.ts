@@ -11,7 +11,7 @@ interface IDatabaseConfig {
 const configs = {
     development: {
         server: {
-            host: '10.90.25.60',
+            host: '127.0.0.1',
             port: 3001
         },
         database: databaseConfig.development as IDatabaseConfig,

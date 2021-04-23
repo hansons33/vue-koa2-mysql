@@ -19,7 +19,7 @@ module.exports = {
         }
       },
       '/test':{
-        target: "http://10.90.25.60:3001/api/v1",
+        target: "http://localhost:3001/api/v1",
         changeOrigin: true,
         pathRewrite: {
           '^/test':''
