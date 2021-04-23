@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "module": "CommonJS",
+        "target": "es2016",         
+        "sourceMap": true,          // 是否支持sourceMap映射调试
+        "noImplicitAny": true,      // 是否允许隐式的Any类型
+        "strictNullChecks": true,   // 严格的空值校验
+        "allowJs": true,            // 是否允许加载JS模块
+        "resolveJsonModule": true,  //是否加载Json模块
+        "esModuleInterop": true,    // 处理模块化
+        "allowSyntheticDefaultImports": true,  // 某些非ES6模块化编写文件的导出处理
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
