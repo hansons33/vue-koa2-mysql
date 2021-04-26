@@ -73,9 +73,7 @@ export default {
             }
         }
     },
-    activated(){
-        Object.assign(this.$data, this.$options.data()); // 初始化数据
-        console.log(123)
+    mounted(){
         let mima = document.querySelector('.password')
         let loginButton = document.querySelector('.login')
         mima.addEventListener('keyup',function(e){
@@ -83,6 +81,10 @@ export default {
                 loginButton.click()
             }
         })
+    },
+    activated(){
+        Object.assign(this.$data, this.$options.data()); // 初始化数据
+        console.log(123)
     }
 }
 </script>

@@ -37,8 +37,6 @@ export default {
             petName: '',
             introduction: '',
             imgUrl: "", //头像
-            fileList: [],
-            username:'',
             changable: true
         }
     },
@@ -56,6 +54,9 @@ export default {
                 if(res.datas.imgUrl){
                     this.imgUrl = res.datas.imgUrl
                     this.changable = false
+                }else{
+                    this.imgUrl = ''
+                    this.changable = true
                 }
                 this.firstLoad = false
             }
@@ -83,7 +84,7 @@ export default {
     },
     activated(){
         this.getUserInfo()
-    }
+    },
 }
 </script>
 
